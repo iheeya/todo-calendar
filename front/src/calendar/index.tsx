@@ -48,11 +48,19 @@ export default function MyCalendar() {
       setTitleError(true);
       return;
     }
-    if (!startTime || !endTime || startTime.isAfter(endTime) || startTime.isSame(endTime)) {
+    if (
+      !startTime ||
+      !endTime ||
+      startTime.isAfter(endTime) ||
+      startTime.isSame(endTime)
+    ) {
       setTimeError(true);
       return;
     }
-    setEvents([...events, newEvent]);
+    setEvents([
+      ...events,
+      { ...newEvent, start: startTime.toDate(), end: endTime.toDate() },
+    ]);                                       
     setOpen(false);
   };
 
@@ -82,10 +90,10 @@ export default function MyCalendar() {
             value={newEvent.title}
             error={titleError}
             helperText={titleError ? "일정 제목을 입력하세요." : ""}
-            onChange={(e) =>{
-              setNewEvent({ ...newEvent, title: e.target.value })
-              setTitleError(false); }
-            }
+            onChange={(e) => {
+              setNewEvent({ ...newEvent, title: e.target.value });
+              setTitleError(false);
+            }}
           />
           <div className="flex justify-between mt-4 mb-4">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
