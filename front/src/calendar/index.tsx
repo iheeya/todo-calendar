@@ -56,6 +56,13 @@ export default function MyCalendar() {
     setOpen(false);
   };
 
+  const handleCancel = () => {
+    setOpen(false);
+    setNewEvent({ title: "", start: new Date(), end: new Date() });
+    setTitleError(false);
+    setTimeError(false);
+  };
+
   return (
     <>
       <Calendar
@@ -116,6 +123,7 @@ export default function MyCalendar() {
             </Alert>
           )}
           <Button onClick={handleSave}>저장</Button>
+          <Button onClick={handleCancel}>취소</Button>
         </DialogContent>
       </Dialog>
     </>
