@@ -1,16 +1,32 @@
-import Calendar from "./calendar/index";
-import { Grid} from "@mui/material";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Mainpage from "./pages/schedule/schedule";
+import Layout from "./shared/layout";
+import Statistics from "./pages/statistics/statistics";
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Mainpage />,
+      },
+      {
+        path: "/statistics",
+        element: <Statistics />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <div className="mx-5 mt-15">
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 7 }}>
-          <Calendar />
-        </Grid>
-      </Grid>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

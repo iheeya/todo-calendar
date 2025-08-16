@@ -60,7 +60,7 @@ export default function MyCalendar() {
     setEvents([
       ...events,
       { ...newEvent, start: startTime.toDate(), end: endTime.toDate() },
-    ]);                                       
+    ]);
     setOpen(false);
   };
 
@@ -82,14 +82,14 @@ export default function MyCalendar() {
       />
 
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>일정 추가</DialogTitle>
+        <DialogTitle>Add Schedule</DialogTitle>
         <DialogContent>
           <TextField
-            label="일정"
+            label="Schedule Name"
             fullWidth
             value={newEvent.title}
             error={titleError}
-            helperText={titleError ? "일정 제목을 입력하세요." : ""}
+            helperText={titleError ? "Enter your schedule" : ""}
             onChange={(e) => {
               setNewEvent({ ...newEvent, title: e.target.value });
               setTitleError(false);
@@ -130,8 +130,8 @@ export default function MyCalendar() {
               시작시간은 종료시간보다 빨라야 합니다.
             </Alert>
           )}
-          <Button onClick={handleSave}>저장</Button>
-          <Button onClick={handleCancel}>취소</Button>
+          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleCancel}>Cancel</Button>
         </DialogContent>
       </Dialog>
     </>
