@@ -7,6 +7,7 @@ import {
   Stack,
   Pagination,
 } from "@mui/material";
+import CreateList from "./createlist";
 
 interface Task {
   id: number;
@@ -19,6 +20,7 @@ const pageSize = 8;
 export default function TodoList() {
   const [tastks, setTasks] = useState<Task[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     fetch("/mock/todolist/todoGet.json")
@@ -45,13 +47,25 @@ export default function TodoList() {
 
   return (
     <>
-      <h1 className="text-center text-xl">Todo List</h1>
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <h1 className="text-center text-xl">Todo List</h1>
+        <CreateList
+          open={open}
+          onClose={() => setOpen(false)}
+          onCreateClick={() => setOpen(true)}
+        />
+      </Stack>
       <Paper
         style={{
           padding: "5%",
           marginTop: "4%",
           width: "100%",
-          minHeight: "90%",
+          minHeight: "88%",
           display: "flex",
           flexDirection: "column",
         }}
@@ -67,23 +81,25 @@ export default function TodoList() {
             </FormGroup>
           ))}
         </div>
-        {pageCount > 1 && (
-          <Stack
-            spacing={2}
-            style={{
-              marginTop: "2%",
-            }}
-          >
-            <Pagination
-              count={pageCount}
-              page={page}
-              onChange={(_, value) => setPage(value)}
-              variant="outlined"
-              shape="rounded"
-              style={{ display: "flex", justifyContent: "center" }}
-            />
-          </Stack>
-        )}
+        <Stack>
+          {pageCount > 1 && (
+            <Stack
+              spacing={2}
+              style={{
+                marginTop: "2%",
+              }}
+            >
+              <Pagination
+                count={pageCount}
+                page={page}
+                onChange={(_, value) => setPage(value)}
+                variant="outlined"
+                shape="rounded"
+                style={{ display: "flex", justifyContent: "center" }}
+              />
+            </Stack>
+          )}
+        </Stack>
       </Paper>
     </>
   );

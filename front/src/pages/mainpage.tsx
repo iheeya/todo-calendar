@@ -1,5 +1,5 @@
-import Calendar from "./components/calendar";
-import TodoList from "./components/todolist";
+import Calendar from "./schedule/components/calendar";
+import TodoList from "./todolist/components/todolist";
 import { Grid } from "@mui/material";
 
 function App() {

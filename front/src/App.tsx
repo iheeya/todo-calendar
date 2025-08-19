@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Mainpage from "./pages/schedule/schedule";
+import Mainpage from "./pages/mainpage";
 import Layout from "./shared/layout";
 import Statistics from "./pages/statistics/statistics";
 
