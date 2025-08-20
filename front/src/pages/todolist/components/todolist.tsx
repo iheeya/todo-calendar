@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { getTodoList } from "../../../shared/api/todolistAPI";
+
 import {
   Checkbox,
   FormGroup,
@@ -23,15 +25,15 @@ export default function TodoList() {
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch("/mock/todolist/todoGet.json")
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log("Todo List Data:", data.tasks);
-        setTasks(data.tasks);
-      })
-      .catch((error) => {
-        console.error("Error fetching todo list:", error);
-      });
+    const getTasks = async () => {
+      try {
+        const tasks = await getTodoList();
+        setTasks(tasks);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+      }
+    };
+    getTasks();
   }, []);
 
   const handleCheckboxChange = (taskId: number) => {
@@ -42,7 +44,7 @@ export default function TodoList() {
     );
   };
 
-  const pageCount = Math.ceil(tastks.length / pageSize);
+  const pageCount = Math.ceil(tastks?.length / pageSize);
   const pageTasks = tastks.slice((page - 1) * pageSize, page * pageSize);
 
   return (
