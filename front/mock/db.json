@@ -50,5 +50,33 @@
       "content": "휴식 취하기",
       "is_done": true
     }
+  ],
+  "rating": 60,
+  "calstemp": [
+    {
+      "id": "1",
+      "date": "2023-10-01",
+      "good": true
+    },
+    {
+      "id": "2",
+      "date": "2023-10-02",
+      "good": false
+    },
+    {
+      "id": "3",
+      "date": "2023-10-03",
+      "good": true
+    },
+    {
+      "id": "4",
+      "date": "2023-10-04",
+      "good": true
+    },
+    {
+      "id": "5",
+      "date": "2023-10-05",
+      "good": false
+    }
   ]
 }
