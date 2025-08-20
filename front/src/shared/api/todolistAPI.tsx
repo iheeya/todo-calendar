@@ -22,6 +22,7 @@ export function PostTodo(taskContent: PostTodoParams) {
   return axiosInstance
     .post("/tasks", taskContent)
     .then((response) => {
+      console.log("New task created:", response.data);
       return Promise.resolve(response.data);
     })
     .catch((e) => {

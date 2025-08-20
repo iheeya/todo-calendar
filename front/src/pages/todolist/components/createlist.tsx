@@ -15,12 +15,14 @@ interface CreateListProps {
   open: boolean;
   onClose: () => void;
   onCreateClick: () => void;
+  onAdd: (todo: { id: number; content: string; is_done: boolean }) => void;
 }
 
 export default function CreateList({
   onCreateClick,
   onClose,
   open,
+  onAdd,
 }: CreateListProps) {
   const [taskContent, setTaskContent] = useState<string>("");
   const isDone = false;
@@ -35,6 +37,7 @@ export default function CreateList({
         is_done: isDone,
       });
 
+      onAdd(newTodo);
       setTaskContent(""); // 입력 필드 초기화
     } catch (error) {
       console.error("Error creating todo:", error);

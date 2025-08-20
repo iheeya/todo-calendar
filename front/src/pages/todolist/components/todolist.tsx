@@ -60,6 +60,7 @@ export default function TodoList() {
           open={open}
           onClose={() => setOpen(false)}
           onCreateClick={() => setOpen(true)}
+          onAdd={(newTodo: Task) => setTasks((prev) => [...prev, newTodo])}
         />
       </Stack>
       <Paper

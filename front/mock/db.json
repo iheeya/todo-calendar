@@ -49,21 +49,6 @@
       "id": "110",
       "content": "휴식 취하기",
       "is_done": true
-    },
-    {
-      "id": "111",
-      "content": "정리하기",
-      "is_done": false
-    },
-    {
-      "id": "112",
-      "content": "일기 쓰기",
-      "is_done": true
-    },
-    {
-      "id": "c30f",
-      "content": "알고리즘",
-      "is_done": false
     }
   ]
 }
