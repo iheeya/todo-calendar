@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTodoList } from "../../../shared/api/todolistAPI";
+import { getTodoList, PostCheckbox } from "../../../shared/api/todolistAPI";
 
 import {
   Checkbox,
@@ -36,7 +36,17 @@ export default function TodoList() {
     getTasks();
   }, []);
 
-  const handleCheckboxChange = (taskId: number) => {
+  const handleCheckboxChange = async (taskId: number) => {
+    try {
+      const checkTask = await PostCheckbox(
+        taskId,
+        !tastks.find((task) => task.id === taskId)?.is_done
+      );
+      console.log("Checkbox updated:", checkTask);
+    } catch (error) {
+      console.error("Failed to update task:", error);
+    }
+
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === taskId ? { ...task, is_done: !task.is_done } : task

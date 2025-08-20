@@ -22,7 +22,18 @@ export function PostTodo(taskContent: PostTodoParams) {
   return axiosInstance
     .post("/tasks", taskContent)
     .then((response) => {
-      console.log("New task created:", response.data);
+      return Promise.resolve(response.data);
+    })
+    .catch((e) => {
+      return Promise.reject(e);
+    });
+}
+
+export function PostCheckbox(taskId: number, isDone: boolean) {
+  return axiosInstance
+    .patch(`/tasks/${taskId}`, { is_done: isDone })
+    .then((response) => {
+      console.log("Task updated:", response.data);
       return Promise.resolve(response.data);
     })
     .catch((e) => {
