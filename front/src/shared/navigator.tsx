@@ -6,6 +6,7 @@ import { AutoGraphOutlined, EditNoteOutlined } from "@mui/icons-material";
 export default function Navigator() {
   const [value, setValue] = useState<number>(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/") {
