@@ -11,3 +11,15 @@ export function getRating() {
       return Promise.reject(e);
     });
 }
+
+export function getCalStemp() {
+  return axiosInstance
+    .get("/calstemp")
+    .then((response) => {
+      const data = response.data;
+      return Promise.resolve(data);
+    })
+    .catch((e) => {
+      return Promise.reject(e);
+    });
+}

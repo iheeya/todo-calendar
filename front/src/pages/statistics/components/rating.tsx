@@ -30,16 +30,16 @@ export default function Rating() {
           clearInterval(timer);
         }
         setDisplayRate(current);
-      }, 20); 
+      }, 20);
 
       return () => clearInterval(timer);
     }
   }, [rateData]);
 
   return (
-    <Box className="mx-auto mt-5" sx={{ width: "80%" }}>
+    <Box>
       <Typography variant="h6" gutterBottom>
-        오늘의 목표 달성률
+        이달의 목표 달성률
       </Typography>
 
       {/* 퍼센트 바 */}
