@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import dayjs, { Dayjs } from "dayjs";
@@ -14,13 +14,22 @@ import {
 } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { getEvents, postEvent } from "../../../shared/api/calendarAPI";
 
 const localizer = momentLocalizer(moment);
 
 interface CalendarEvent {
+  id?: number;
   title: string;
   start: Date;
   end: Date;
+}
+
+interface CalendarEventAPI {
+  id: number;
+  title: string;
+  start: string; // ISO 8601 format
+  end: string; // ISO 8601 format
 }
 
 export default function MyCalendar() {
@@ -61,8 +70,35 @@ export default function MyCalendar() {
       ...events,
       { ...newEvent, start: startTime.toDate(), end: endTime.toDate() },
     ]);
+    // 저장되는 데이터 확인
+    console.log("새로 저장되는 이벤트:", newEvent);
+    console.log("시작 시간:", newEvent.start);
+    console.log("종료 시간:", newEvent.end);
+
+    // 전체 이벤트 목록도 확인
+    console.log("전체 이벤트 목록:", [...events, newEvent]);
+
     setOpen(false);
   };
+
+  useEffect(() =>{
+    const getAllEvents = async () => {
+      try{
+        const eventsFromAPI: CalendarEventAPI[] = await getEvents();
+        const formattedEvents = eventsFromAPI.map((event) => ({
+          id: event.id,
+          title: event.title,
+          start: new Date(event.start),
+          end: new Date(event.end),
+        }));
+        setEvents(formattedEvents);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      }
+    }
+    getAllEvents();
+  }, []);
+
 
   const handleCancel = () => {
     setOpen(false);
@@ -130,8 +166,8 @@ export default function MyCalendar() {
               시작시간은 종료시간보다 빨라야 합니다.
             </Alert>
           )}
-          <Button onClick={handleSave}>Save</Button>
           <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogContent>
       </Dialog>
     </>
