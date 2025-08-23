@@ -62,7 +62,7 @@ export default function CreateList({
               label="할 일 내용"
               type="text"
               variant="standard"
-              sx={{ mx: 2, width: "80%" }} // 좌우 마진(margin-left/right) 추가
+              sx={{ mx: 2, width: "80%" }} 
               onChange={(e) => setTaskContent(e.target.value)}
             />
           </DialogContent>
@@ -71,8 +71,6 @@ export default function CreateList({
             <Button type="submit" form="create-task-form">
               저장
             </Button>
-            {/* 저장할때는 API 형식 맞춰서 데이터 전송
-          엔터 입력해도 전송되도록*/}
           </DialogActions>
         </form>
       </Dialog>

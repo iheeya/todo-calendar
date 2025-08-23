@@ -165,14 +165,14 @@ export default function MyCalendar() {
       />
 
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add Schedule</DialogTitle>
+        <DialogTitle>일정 추가</DialogTitle>
         <DialogContent>
           <TextField
-            label="Schedule Name"
+            label="일정"
             fullWidth
             value={newEvent.title}
             error={titleError}
-            helperText={titleError ? "Enter your schedule" : ""}
+            helperText={titleError ? "일정을 입력하세요" : ""}
             onChange={(e) => {
               setNewEvent({ ...newEvent, title: e.target.value });
               setTitleError(false);
@@ -181,7 +181,7 @@ export default function MyCalendar() {
           <div className="flex justify-between mt-4 mb-4">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
-                label="Start Time"
+                label="시작 시간"
                 value={startTime}
                 onChange={(newValue) => {
                   setStartTime(newValue);
@@ -194,7 +194,7 @@ export default function MyCalendar() {
                 }}
               />
               <TimePicker
-                label="End Time"
+                label="종료 시간"
                 value={endTime}
                 onChange={(newValue) => {
                   setEndTime(newValue);
@@ -213,8 +213,8 @@ export default function MyCalendar() {
               시작시간은 종료시간보다 빨라야 합니다.
             </Alert>
           )}
-          <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleCancel}>취소</Button>
+          <Button onClick={handleSave}>저장</Button>
         </DialogContent>
       </Dialog>
 
