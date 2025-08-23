@@ -26,7 +26,7 @@ interface CalendarEvent {
 }
 
 interface CalendarEventAPI {
-  id: number;
+  id?: number;
   title: string;
   start: string; // ISO 8601 format
   end: string; // ISO 8601 format
@@ -70,20 +70,27 @@ export default function MyCalendar() {
       ...events,
       { ...newEvent, start: startTime.toDate(), end: endTime.toDate() },
     ]);
-    // 저장되는 데이터 확인
-    console.log("새로 저장되는 이벤트:", newEvent);
-    console.log("시작 시간:", newEvent.start);
-    console.log("종료 시간:", newEvent.end);
 
-    // 전체 이벤트 목록도 확인
-    console.log("전체 이벤트 목록:", [...events, newEvent]);
+    const eventToPost = async () => {
+      try {
+        const eventForAPI: CalendarEventAPI = {
+          title: newEvent.title,
+          start: startTime.toISOString(),
+          end: endTime.toISOString(),
+        };
+        await postEvent(eventForAPI);
+      } catch (error) {
+        console.error("Failed to post event:", error);
+      }
+    };
+    eventToPost();
 
     setOpen(false);
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     const getAllEvents = async () => {
-      try{
+      try {
         const eventsFromAPI: CalendarEventAPI[] = await getEvents();
         const formattedEvents = eventsFromAPI.map((event) => ({
           id: event.id,
@@ -95,10 +102,9 @@ export default function MyCalendar() {
       } catch (error) {
         console.error("Failed to fetch events:", error);
       }
-    }
+    };
     getAllEvents();
   }, []);
-
 
   const handleCancel = () => {
     setOpen(false);

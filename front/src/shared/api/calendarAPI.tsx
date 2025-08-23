@@ -1,7 +1,6 @@
 import axiosInstance from "./axiosInstance";
 
 interface CalendarEvent {
-  id: number;
   title: string;
   start: string; // ISO 8601 format
   end: string; // ISO 8601 format
