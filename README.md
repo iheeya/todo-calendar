@@ -114,7 +114,7 @@ npm run dev
 
 ##### 주요 구현 기능
 
-- 일정 삭제 확인 다디얼로그
+- 일정 삭제 확인 다이얼로그
 ```JavaScript
   <Dialog open={open} onClose={onClose} fullWidth>
         <form onSubmit={handleSubmit} id="create-task-form">
