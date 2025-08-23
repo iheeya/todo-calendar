@@ -28,3 +28,14 @@ export function postEvent(event: CalendarEvent) {
       return Promise.reject(e);
     });
 }
+
+export function deleteEvent(eventId: number) {
+  return axiosInstance
+    .delete(`/schedule/${eventId}`)
+    .then((response) => {
+      return Promise.resolve(response.data);
+    })
+    .catch((e) => {
+      return Promise.reject(e);
+    });
+}

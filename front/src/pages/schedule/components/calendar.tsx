@@ -11,10 +11,16 @@ import {
   TextField,
   Button,
   Alert,
+  Typography,
+  DialogActions,
 } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { getEvents, postEvent } from "../../../shared/api/calendarAPI";
+import {
+  getEvents,
+  postEvent,
+  deleteEvent,
+} from "../../../shared/api/calendarAPI";
 
 const localizer = momentLocalizer(moment);
 
@@ -44,12 +50,23 @@ export default function MyCalendar() {
   const [timeError, setTimeError] = useState(false);
   const [startTime, setStartTime] = useState<Dayjs | null>(dayjs());
   const [endTime, setEndTime] = useState<Dayjs | null>(dayjs());
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+    null
+  );
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+  // 빈 슬롯 선택
   const handleSelectSlot = ({ start, end }: CalendarEvent) => {
     setNewEvent({ title: "", start, end });
     setOpen(true);
     setTitleError(false);
     setTimeError(false);
+  };
+
+  // 기존 이벤트 선택
+  const handleSelectEvent = (event: CalendarEvent) => {
+    setSelectedEvent(event);
+    setDeleteDialogOpen(true);
   };
 
   const handleSave = () => {
@@ -113,6 +130,29 @@ export default function MyCalendar() {
     setTimeError(false);
   };
 
+  // 이벤트 삭제 핸들러
+
+  const handleDeleteConfirm = async () => {
+    if (selectedEvent && selectedEvent.id) {
+      try {
+        await deleteEvent(selectedEvent.id);
+        setEvents(events.filter((event) => event.id !== selectedEvent.id));
+        console.log("일정이 삭제되었습니다:", selectedEvent.title);
+      } catch (error) {
+        console.error("일정 삭제 실패:", error);
+        alert("일정 삭제에 실패했습니다.");
+      }
+    }
+    setDeleteDialogOpen(false);
+    setSelectedEvent(null);
+  };
+
+  // 일정 삭제 취소
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setSelectedEvent(null);
+  };
+
   return (
     <>
       <Calendar
@@ -120,6 +160,7 @@ export default function MyCalendar() {
         events={events}
         selectable
         onSelectSlot={handleSelectSlot}
+        onSelectEvent={handleSelectEvent}
         style={{ height: 500 }}
       />
 
@@ -175,6 +216,39 @@ export default function MyCalendar() {
           <Button onClick={handleCancel}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
         </DialogContent>
+      </Dialog>
+
+      {/* 일정 삭제 확인 다이얼로그 */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteCancel}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>일정 삭제</DialogTitle>
+        <DialogContent>
+          <Typography>
+            <strong>"{selectedEvent?.title}"</strong> 일정을 삭제하시겠습니까?
+          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            style={{ marginTop: "8px" }}
+          >
+            {selectedEvent && (
+              <>
+                📅 {moment(selectedEvent.start).format("YYYY년 MM월 DD일")}{" "}
+                <br />
+                🕐 {moment(selectedEvent.start).format("HH:mm")} -{" "}
+                {moment(selectedEvent.end).format("HH:mm")}
+              </>
+            )}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel}>취소</Button>
+          <Button onClick={handleDeleteConfirm}>삭제</Button>
+        </DialogActions>
       </Dialog>
     </>
   );
