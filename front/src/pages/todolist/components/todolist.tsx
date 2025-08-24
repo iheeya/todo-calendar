@@ -42,7 +42,6 @@ export default function TodoList() {
         taskId,
         !tastks.find((task) => task.id === taskId)?.is_done
       );
-      console.log("Checkbox updated:", checkTask);
     } catch (error) {
       console.error("Failed to update task:", error);
     }

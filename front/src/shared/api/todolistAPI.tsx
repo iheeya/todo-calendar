@@ -33,7 +33,6 @@ export function PostCheckbox(taskId: number, isDone: boolean) {
   return axiosInstance
     .patch(`/tasks/${taskId}`, { is_done: isDone })
     .then((response) => {
-      console.log("Task updated:", response.data);
       return Promise.resolve(response.data);
     })
     .catch((e) => {
